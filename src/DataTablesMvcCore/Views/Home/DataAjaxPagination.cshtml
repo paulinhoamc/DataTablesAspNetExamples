@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Server Pagination";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Server Pagination DataTables</h1>
+    <p>Veja o modelo <a href="https://datatables.net/examples/data_sources/dom.html">DataTable DataSource</a>. Este modelo apenas formata os dados já carregados no HTML da página.</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <table id="example" class="table table-striped" style="width:100%"></table>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '/api/produtos/datatables',
+                columns: [
+                    { data: 'ncm', title: 'NCM', sortable: true, searchable: true },
+                    { data: 'nome', title: 'Produto', sortable: true, searchable: true },
+                    {
+                        data: 'municipal', title: 'Municipal', sortable: false, searchable: false, render: function (data) {
+                            return data.toFixed(2);
+                        }
+                    },
+                    {
+                        data: 'estadual', title: 'Estadual', sortable: false, searchable: false, render: function (data) {
+                            return data.toFixed(2);
+                        }
+                    },
+                    {
+                        data: 'federal', title: 'Federal', sortable: false, searchable: false, render: function (data) {
+                            return data.toFixed(2);
+                        }
+                    },
+                    {
+                        data: 'importacao', title: 'Importação', sortable: false, searchable: false, render: function (data) {
+                            return data.toFixed(2);
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

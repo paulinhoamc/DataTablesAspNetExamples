@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "JQuery Load";
+}
+
+<div class="text-center">
+    <h1 class="display-4">JQuery Load DataTables</h1>
+    <p>Veja a documentação em <a href="https://datatables.net/upgrade/1.10-convert#API">API do DataTables</a>. O DataTables montado via script, e o método load() carrega os dados e popula o componente.</p>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <hr />
+        <button class="btn btn-secondary" onclick="load()">Carregar</button>
+        <hr />
+    </div>
+    <div class="col-lg-12">
+        <table id="example" class="table table-striped" style="width:100%"></table>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var table = $('#example');
+
+        $(document).ready(function () {
+            table.dataTable({
+                stateSave: false,
+                columns: [
+                    { data: 'ncm', title: 'NCM', sortable: true, searchable: true },
+                    { data: 'nome', title: 'Produto', sortable: true, searchable: true },
+                    { data: 'municipal', title: 'Municipal', sortable: false, searchable: false },
+                    { data: 'estadual', title: 'Estadual', sortable: false, searchable: false },
+                    { data: 'federal', title: 'Federal', sortable: false, searchable: false },
+                    { data: 'importacao', title: 'Importação', sortable: false, searchable: false }
+                ]
+            });
+        });
+
+        function load() {
+            table.dataTable().fnClearTable();
+            $.getJSON('/api/produtos/10000', function (dados) {
+                if (dados.data.length > 0) {
+                    table.dataTable().fnAddData(dados.data);
+                }
+            });
+        }
+    </script>
+}
